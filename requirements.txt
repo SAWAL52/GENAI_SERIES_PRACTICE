@@ -3,5 +3,6 @@ langchain-ollama
 langchain-openai
 langchain-google-gemini
 langchain-anthropic
+streamlit
 dotenv
 
