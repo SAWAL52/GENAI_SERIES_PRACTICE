@@ -8,7 +8,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 load_dotenv()
 
 llm = ChatOllama(
-    model="llama3.2:1b",
+    model="llama3.2:3b",
     base_url="http://127.0.0.1:11434"
 )
 
