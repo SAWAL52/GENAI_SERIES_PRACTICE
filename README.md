@@ -12,8 +12,8 @@ This repository contains my code and Jupyter notebooks as I learn about Generati
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/GENAI_SERIES.git
-cd GENAI_SERIES
+git clone https://github.com/SAWAL52/GENAI_SERIES_PRACTICE.git
+cd GENAI_SERIES_PRACTICE
 ```
 
 Create and activate a virtual environment:
