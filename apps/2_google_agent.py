@@ -6,11 +6,17 @@ from langchain_community.utilities import GoogleSerperAPIWrapper
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from langchain_core.tools import Tool
+from langgraph.checkpoint.memory import MemorySaver
 
-# Load environment variables
+import uuid
+
+if "thread_id" not in st.session_state:
+    st.session_state.thread_id = str(uuid.uuid4())
+
+
 load_dotenv()
 
-# Streamlit page configuration
+
 st.set_page_config(
     page_title="Google Search AI Agent",
     page_icon="🔎",
@@ -20,7 +26,7 @@ st.set_page_config(
 st.title("🔎 Google Search AI Agent")
 st.caption("Ask questions and get answers using Google Search and Groq.")
 
-# Initialize agent only once
+
 @st.cache_resource
 def get_agent():
 
@@ -34,7 +40,8 @@ def get_agent():
     search_tool = Tool(
         name="google_search",
         func=search.run,
-        description="Search Google for current information and answer user questions."
+        description="Search Google for current information and answer user questions.",
+        
     )
 
     agent = create_agent(
@@ -44,7 +51,8 @@ def get_agent():
             "You are a helpful research assistant. "
             "Use Google Search whenever external or current information is needed. "
             "Give clear and concise answers based on search results."
-        )
+        ),
+        checkpointer=MemorySaver()
     )
 
     return agent
@@ -52,16 +60,16 @@ def get_agent():
 
 agent = get_agent()
 
-# Initialize chat history
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display previous messages
+
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Chat input
+
 query = st.chat_input("Ask anything...")
 
 if query:
@@ -83,8 +91,9 @@ if query:
                 response = agent.invoke({
                     "messages": [
                         {"role": "user", "content": query}
-                    ]
-                })
+                    ]},
+                    {"configurable":{"thread_id":st.session_state.thread_id}}
+                )
 
                 answer = response["messages"][-1].content
 
@@ -98,7 +107,6 @@ if query:
             except Exception as e:
                 st.error(f"Something went wrong: {e}")
 
-# Sidebar
 with st.sidebar:
     st.header("About")
     st.write(
@@ -108,4 +116,5 @@ with st.sidebar:
 
     if st.button("Clear Chat"):
         st.session_state.messages = []
+        st.session_state.thread_id = str(uuid.uuid4())
         st.rerun()

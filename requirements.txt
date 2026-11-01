@@ -8,3 +8,5 @@ langchain-community
 streamlit
 dotenv
 google-search-results
+langgraph 
+
