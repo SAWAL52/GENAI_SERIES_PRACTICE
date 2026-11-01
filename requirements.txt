@@ -4,6 +4,7 @@ langchain-openai
 langchain-google-gemini
 langchain-anthropic
 langchain-groq
+langchain-community
 streamlit
 dotenv
-
+google-search-results
