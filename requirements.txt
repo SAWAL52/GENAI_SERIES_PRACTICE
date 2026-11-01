@@ -9,4 +9,5 @@ streamlit
 dotenv
 google-search-results
 langgraph 
-
+pypdf
+beautfiulsoup4
