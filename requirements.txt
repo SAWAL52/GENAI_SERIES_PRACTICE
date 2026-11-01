@@ -3,6 +3,7 @@ langchain-ollama
 langchain-openai
 langchain-google-gemini
 langchain-anthropic
+langchain-groq
 streamlit
 dotenv
 
