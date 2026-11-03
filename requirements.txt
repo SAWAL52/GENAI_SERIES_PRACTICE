@@ -15,4 +15,5 @@ wikipedia
 langchain-text-splitters
 langchain-huggingface
 langchain-chroma
+pydantic
 
